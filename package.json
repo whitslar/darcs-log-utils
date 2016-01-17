@@ -2,9 +2,10 @@
   "name": "git-log-utils",
   "version": "0.1.0",
   "description": "Utility methods for parsing git log output",
-  "main": "index.js",
+  "main": "lib/git-log-utils.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "prepublish": "grunt build"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,13 @@
   },
   "homepage": "https://github.com/littlebee/git-log-utils",
   "devDependencies": {
+    "babel-core": "^6.4.0",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
     "bumble-build": "^0.1.6",
+    "bumble-docs": "^0.4.3",
+    "bumble-test": "^0.1.4",
     "grunt": "^0.4.5",
     "grunt-available-tasks": "^0.6.1",
     "grunt-coffee-react": "^2.4.1",
@@ -33,6 +40,12 @@
     "grunt-react": "^0.12.3",
     "grunt-scp": "^0.1.8",
     "grunt-shell": "^1.1.2",
-    "grunt-sync": "^0.5.1"
+    "grunt-sync": "^0.5.1",
+    "grunt-webpack": "^1.0.11",
+    "webpack": "^1.12.11",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "underscore": "^1.8.3"
   }
 }
