@@ -1,5 +1,10 @@
 ###
 
-This file has been committed 5 times. 
+This file has been committed 5 times. This is used to test the parsing of git log messages by git-time-machine.
+
+Added a whole mess of lines in the first commit
+Like this one
+and this one
+and another
 
 ###
