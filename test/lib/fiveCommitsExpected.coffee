@@ -2,45 +2,58 @@
   this is the expected data for the first five commits of test-data/fiveCommits.txt.
   Only the keys in these objects are tested against the actual first five commits read
   from git log
+
+  this should remain static, but if you need to redo, use bin/gitLogJson.coffee test/lib/fiveCommits.txt
+  and replace array below with pasted output
+
 ###
-module.exports = [{
-  "id": "4d3547944bbac446b229838867bf60dd55289213",
-  "authorName": "Bee",
-  "authorDate": 1445053404,
-  "message": "git-util-spec: fifth commit of spec/testData/fiveCommits.txt. only deleted a line",
-  "hash": "4d35479",
-  "linesAdded": 0,
-  "linesDeleted": 2
-}, {
-  "id": "fa4aee05281c12f2ba8c92eb1100964f98901caa",
-  "authorName": "Bee",
-  "authorDate": 1445053316,
-  "message": "git-util-spec: forth commit of spec/testData/fiveCommits.txt",
-  "hash": "fa4aee0",
-  "linesAdded": 1,
-  "linesDeleted": 0
-}, {
-  "id": "010f49a2cf4fb08f7117782269ce8ede07e0797a",
-  "authorName": "Bee",
-  "authorDate": 1445053277,
-  "message": "git-util-spec: third commit of spec/testData/fiveCommits.txt",
-  "hash": "010f49a",
-  "linesAdded": 2,
-  "linesDeleted": 1
-}, {
-  "id": "3d03801db29c1f9d92550c8bfed32b21c08ced4c",
-  "authorName": "Bee",
-  "authorDate": 1445053179,
-  "message": "git-util-spec: load correct fully qualified test file name. plus second commit of fiveCommits.txt",
-  "hash": "3d03801",
-  "linesAdded": 2,
-  "linesDeleted": 0
-}, {
-  "id": "bb7b15fc68e681347185003ddb534366465c5b36",
-  "authorName": "Bee",
-  "authorDate": 1445052734,
-  "message": "GitUtils.getFileCommitHistory should return valid data. +new failing test",
-  "hash": "bb7b15f",
-  "linesAdded": 7,
-  "linesDeleted": 0
-}]
+module.exports = [
+  { 
+    id: "8b94d8444351171180fa01b24e302bc215f21474",
+    authorName: "Bee Wilkerson",
+    # relativeDate will always be wrong, don't test it
+    # relativeDate: "2 hours ago",
+    authorDate: 1453041651,
+    message: "5th of 5 commits test",
+    body: "",
+    hash: "8b94d84",
+    linesAdded: 1,
+    linesDeleted: 1 
+  },{ 
+    id: "73a007fed9c0aa562a6acf6cfb7ae019d82f677d",
+    authorName: "Bee Wilkerson",
+    authorDate: 1453041603,
+    message: "4th of 5 commits test",
+    body: "",
+    hash: "73a007f",
+    linesAdded: 1,
+    linesDeleted: 3 
+  },{ 
+    id: "b275decc27a27fcfcf653d50c79d705e1cec0c20",
+    authorName: "Bee Wilkerson",
+    authorDate: 1453041536,
+    message: "3rd of 5 commits test",
+    body: "",
+    hash: "b275dec",
+    linesAdded: 2,
+    linesDeleted: 0 
+  },{ 
+    id: "04f65dcf5b6d7da5bad9dcc6a9fba52acb3e548f",
+    authorName: "Bee Wilkerson",
+    authorDate: 1453041463,
+    message: "2nd of 5 commits test",
+    body: "",
+    hash: "04f65dc",
+    linesAdded: 6,
+    linesDeleted: 1 
+  },{ 
+    id: "404744f451bfbac84598c19cd20506af87b2060d",
+    authorName: "Bee Wilkerson",
+    authorDate: 1453041370,
+    message: "brought over git-utils and test from git-time-machine. also start of 5 commits test.",
+    body: "",
+    hash: "404744f",
+    linesAdded: 5,
+    linesDeleted: 0 
+  } 
+]

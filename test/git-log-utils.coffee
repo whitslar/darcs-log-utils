@@ -1,48 +1,25 @@
 
-GitUtils = require '../lib/git-utils'
-fs = require 'fs'
-path = require 'path'
+Fs = require 'fs'
+Path = require 'path'
 
-expectedCommits = require './test-data/fiveCommitsExpected'
+GitLogUtils = require('../src/git-log-utils')
+expectedCommits = require './lib/fiveCommitsExpected'
+
+debugger
 
 describe "GitUtils", ->
+
   describe "when loading file history for known file in git", ->
+
     beforeEach ->
-      @addMatchers toHaveKnownValues: (expected) ->
-        pass = true
-        messages = ""
-        for key, value of expected
-          matches = @actual[key] == value
-          unless matches
-            if pass
-              messages += "Commit #{@actual.hash}: "
-            else
-              messages += "; "
-            messages += "#{key} expected: #{value} actual: #{@actual[key]}"
-            pass = false
-        if pass
-          @message = -> "Expected commit #{@actual.hash} to not equal #{JSON.stringify(@expected)}"
-        else
-          @message = -> messages
-        return pass
-
-      projectRoot = __dirname
-      testFileName = path.join projectRoot, 'test-data', 'fiveCommits.txt'
-      @testdata = null
-
-      GitUtils.getFileCommitHistory testFileName, (commits) =>
-        @testdata = commits
-        return
-
-      waitsFor =>
-        return @testdata?
-
+      testFileName = Path.join __dirname, 'lib', 'fiveCommits.txt'
+      @testdata = GitLogUtils.getCommitHistory testFileName
 
     it "should have 5 commits", ->
-      expect(@testdata.length).toEqual(5)
-
+      @testdata.length.should.equal(5)
 
     it "first 5 commits should match last known good", ->
-      for expectedCommit, index in expectedCommits
-        actualCommit = @testdata[index]
-        expect(actualCommit).toHaveKnownValues(expectedCommit)
+      expect(@testdata).toHaveKnownValues(expectedCommits)
+      # for expectedCommit, index in expectedCommits
+      #   actualCommit = @testdata[index]
+      #   expect(actualCommit).toHaveKnownValues(expectedCommit)
