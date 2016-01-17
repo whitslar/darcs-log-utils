@@ -1,0 +1,38 @@
+{
+  "name": "git-log-utils",
+  "version": "0.1.0",
+  "description": "Utility methods for parsing git log output",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/littlebee/git-log-utils.git"
+  },
+  "keywords": [
+    "git",
+    "log"
+  ],
+  "author": "Bee Wilkerson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/littlebee/git-log-utils/issues"
+  },
+  "homepage": "https://github.com/littlebee/git-log-utils",
+  "devDependencies": {
+    "bumble-build": "^0.1.6",
+    "grunt": "^0.4.5",
+    "grunt-available-tasks": "^0.6.1",
+    "grunt-coffee-react": "^2.4.1",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-newer": "^1.1.1",
+    "grunt-react": "^0.12.3",
+    "grunt-scp": "^0.1.8",
+    "grunt-shell": "^1.1.2",
+    "grunt-sync": "^0.5.1"
+  }
+}
