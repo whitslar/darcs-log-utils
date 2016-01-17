@@ -1,6 +1,6 @@
 #!/usr/bin/env coffee
 
-GitLogUtils = require '../src/git-log-utils'
+GitLogUtils = require '../lib/git-log-utils'
 
 debugger
 path = process.argv[2]
