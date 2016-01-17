@@ -1,6 +1,6 @@
 {
   "name": "git-log-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Utility methods for parsing git log output",
   "main": "lib/git-log-utils.js",
   "scripts": {
