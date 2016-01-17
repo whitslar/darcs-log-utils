@@ -7,4 +7,6 @@ Like this one
 and this one
 and another
 
+This line was added on the 3rd commit
+
 ###
