@@ -20,6 +20,15 @@ describe "GitUtils", ->
 
     it "first 5 commits should match last known good", ->
       expect(@testdata).toHaveKnownValues(expectedCommits)
-      # for expectedCommit, index in expectedCommits
-      #   actualCommit = @testdata[index]
-      #   expect(actualCommit).toHaveKnownValues(expectedCommit)
+      
+  describe "when loading history for a directory", ->
+    beforeEach ->
+      testFileName = Path.join __dirname, '..'
+      @testdata = GitLogUtils.getCommitHistory testFileName
+
+    it "should have more then 5 commits", ->
+      expect(@testdata.length).to.be.above(5)
+
+    it "the 5 commits to test file should be in the commit data", ->
+      expect(@testdata).toHaveKnownValues(expectedCommits)
+      

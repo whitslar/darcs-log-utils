@@ -37,7 +37,11 @@ module.exports = class GitLogUtils
     flags = " --pretty='format:#{format}' --topo-order --date=local --numstat"
     
     fstats = Fs.statSync fileName
-    directory = if fstats.isDirectory() then fileName else Path.dirname(fileName)
+    if fstats.isDirectory() 
+      directory = fileName
+      fileName = ""
+    else 
+      directory = Path.dirname(fileName)
           
     cmd = "cd #{directory} && git log#{flags} #{fileName}"
     #console.log cmd
