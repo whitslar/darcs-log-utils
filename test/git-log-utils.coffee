@@ -3,7 +3,9 @@ Fs = require 'fs'
 Path = require 'path'
 
 GitLogUtils = require('../src/git-log-utils')
-expectedCommits = require './lib/fiveCommitsExpected'
+
+expectedCommitsForFile = require './data/expectedCommitsForFile'
+expectedCommitsForDir = require './data/expectedCommitsForDir'
 
 debugger
 
@@ -19,7 +21,7 @@ describe "GitUtils", ->
       @testdata.length.should.equal(5)
 
     it "first 5 commits should match last known good", ->
-      expect(@testdata).toHaveKnownValues(expectedCommits)
+      expect(@testdata).toHaveKnownValues(expectedCommitsForFile)
       
   describe "when loading history for a directory", ->
     beforeEach ->
@@ -30,5 +32,5 @@ describe "GitUtils", ->
       expect(@testdata.length).to.be.above(5)
 
     it "the 5 commits to test file should be in the commit data", ->
-      expect(@testdata).toHaveKnownValues(expectedCommits)
+      expect(@testdata).toHaveKnownValues(expectedCommitsForDir)
       

@@ -5,7 +5,10 @@ Fs = require "fs"
 
 _ = require('underscore')
 
+
 module.exports = class GitLogUtils 
+
+
   ###
     returns an array of javascript objects representing the commits that effected the requested file
     with line stats, that looks like this:
@@ -29,8 +32,10 @@ module.exports = class GitLogUtils
     rawLog = @_fetchFileHistory(fileName)
     return @_parseGitLogOutput(rawLog)
     
-
+  
   # Implementation
+  
+  
   @_fetchFileHistory: (fileName) ->
     format = ("""{"id": "%H", "authorName": "%an", "relativeDate": "%cr", "authorDate": %at, """ +
       """ "message": "%s", "body": "%b", "hash": "%h"}""").replace(/\"/g, "#/dquotes/")
@@ -44,7 +49,7 @@ module.exports = class GitLogUtils
       directory = Path.dirname(fileName)
           
     cmd = "cd #{directory} && git log#{flags} #{fileName}"
-    #console.log cmd
+    console.log '$ ' + cmd if process.env.DEBUG == '1'
     return ChildProcess.execSync(cmd).toString()
     
 
@@ -65,9 +70,10 @@ module.exports = class GitLogUtils
           lastCommitObj = @_parseCommitObj(lastCommitObj)
           logItems.push lastCommitObj if lastCommitObj
       else if lastCommitObj? && (matches = line.match(/^(\d+)\s*(\d+).*/))
-        # git log --num-stat appends line stats on separate line
-        lastCommitObj.linesAdded = Number.parseInt(matches[1])
-        lastCommitObj.linesDeleted = Number.parseInt(matches[2])
+        # console.log "lastCommitObj", lastCommitObj
+        # git log --num-stat appends line stats on separate lines
+        lastCommitObj.linesAdded = (lastCommitObj.linesAdded || 0) + Number.parseInt(matches[1])
+        lastCommitObj.linesDeleted = (lastCommitObj.linesDeleted || 0) + Number.parseInt(matches[2])
 
     return logItems
 
@@ -83,4 +89,5 @@ module.exports = class GitLogUtils
     catch
       console.warn "failed to parse JSON #{encLine}"
       return null
-    
+      
+

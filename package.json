@@ -28,6 +28,7 @@
     "babel-preset-react": "^6.3.13",
     "bumble-build": "^0.1.6",
     "bumble-docs": "^0.4.3",
+    "bumble-strings": "^0.1.4",
     "bumble-test": "^0.1.4",
     "grunt": "^0.4.5",
     "grunt-available-tasks": "^0.6.1",
