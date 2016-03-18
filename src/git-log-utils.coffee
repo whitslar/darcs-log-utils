@@ -46,7 +46,7 @@ module.exports = class GitLogUtils
       directory = fileName
       fileName = ""
     else 
-      directory = Path.dirname(fileName)
+      directory = Path.normalize(Path.dirname(fileName))
           
     cmd = "cd #{directory} && git log#{flags} #{fileName}"
     console.log '$ ' + cmd if process.env.DEBUG == '1'
