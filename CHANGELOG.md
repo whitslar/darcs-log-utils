@@ -1,3 +1,6 @@
+## [0.1.6](https://github.com/littlebee/git-log-utils.git/compare/0.1.5...0.1.6) (2016-03-79)
+remove accidental console.log left behind
+
 ## [0.1.5](https://github.com/littlebee/git-log-utils.git/compare/0.0.0...0.1.5) (2016-03-78)
 
 
