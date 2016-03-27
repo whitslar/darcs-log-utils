@@ -39,7 +39,7 @@ module.exports = class GitLogUtils
   @_fetchFileHistory: (fileName) ->
     format = ("""{"id": "%H", "authorName": "%an", "relativeDate": "%cr", "authorDate": %at, """ +
       """ "message": "%s", "body": "%b", "hash": "%h"}""").replace(/\"/g, "#/dquotes/")
-    flags = " --pretty='format:#{format}' --topo-order --date=local --numstat"
+    flags = " --pretty=\"format:#{format}\" --topo-order --date=local --numstat"
     
     fstats = Fs.statSync fileName
     if fstats.isDirectory() 
@@ -50,7 +50,7 @@ module.exports = class GitLogUtils
           
     cmd = "cd #{directory} && git log#{flags} #{fileName}"
     console.log '$ ' + cmd if process.env.DEBUG == '1'
-    return ChildProcess.execSync(cmd).toString()
+    return ChildProcess.execSync(cmd,  {stdio: 'pipe' }).toString()
     
 
   @_parseGitLogOutput: (output) ->
