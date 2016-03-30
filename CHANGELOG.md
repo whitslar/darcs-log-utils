@@ -1,3 +1,9 @@
+## [0.2.1](https://github.com/littlebee/git-log-utils.git/compare/0.2.0...0.2.1) (2016-03-89)
+
+
+### Other Commits
+* [c7dc6eb](https://github.com/littlebee/git-log-utils.git/commit/c7dc6eb469ebca55124ad7f12c696a130d6fe76d) fixes git-time-machine:issue#30. should handle spaces in directory and file names and properly escape and normalize file for windows
+
 ## [0.2.0](https://github.com/littlebee/git-log-utils.git/compare/0.1.6...0.2.0) (2016-03-87)
 Thank you @Faleij the critical windows fix.   Did I ever tell you, you're my hero. :)
 
