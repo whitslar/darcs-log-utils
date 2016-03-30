@@ -46,11 +46,13 @@ module.exports = class GitLogUtils
       directory = fileName
       fileName = ""
     else 
-      directory = Path.normalize(Path.dirname(fileName))
-          
-    cmd = "cd #{directory} && git log#{flags} #{fileName}"
+      directory = Path.dirname(fileName)
+      
+    fileName = Path.normalize(@_escapeSpacesInPath(fileName))
+    
+    cmd = "git log#{flags} #{fileName}"
     console.log '$ ' + cmd if process.env.DEBUG == '1'
-    return ChildProcess.execSync(cmd,  {stdio: 'pipe' }).toString()
+    return ChildProcess.execSync(cmd,  {stdio: 'pipe', cwd: directory}).toString()
     
 
   @_parseGitLogOutput: (output) ->
@@ -90,4 +92,10 @@ module.exports = class GitLogUtils
       console.warn "failed to parse JSON #{encLine}"
       return null
       
-
+  ###
+    See nodejs Path.normalize().  This method extends Path.normalize() to add:
+    - escape of space characters 
+  ###
+  @_escapeSpacesInPath: (filePath) ->
+    spaceReplacement = if process.platform == 'win32' then '^ ' else '\\ '
+    return filePath.replace(/ /g, spaceReplacement)
