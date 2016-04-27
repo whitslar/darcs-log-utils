@@ -1,6 +1,6 @@
 
-# git-log-utils
-Utility methods for parsing `git log` output
+# darcs-log-utils
+Utility methods for parsing `darcs changes` output
 
 ## Installation
 ```
@@ -10,21 +10,19 @@ Utility methods for parsing `git log` output
 ## Usage
 ```javascript
 
-GitLogUtils = require('git-log-utils')
+DarcsLogUtils = require('darcs-log-utils')
 
-GitLogUtils.getFileCommitHistory(fileName)
+DarcsLogUtils.getFileCommitHistory(fileName)
 ```
 Returns an array of javascript objects representing the commits that effected the requested file
 with line stats, that looks like this:
 ```javascript  
 [{
-  "id": "1c41d8f647f7ad30749edcd0a554bd94e301c651",
-  "authorName": "Bee Wilkerson",
-  "relativeDate": "6 days ago",
+  "hash": "84b7bd17809b9dd805af7228787acfa194d0da08",
+  "authorName": "matt.whitslar@email.com",
   "authorDate": 1450881433,
   "message": "docs all work again after refactoring to bumble-build",
   "body": "",
-  "hash": "1c41d8f",
   "linesAdded": 2,
   "linesDeleted": 2
 }, {

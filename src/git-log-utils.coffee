@@ -4,9 +4,10 @@ Path = require "path"
 Fs = require "fs"
 
 _ = require('underscore')
+moment = require('moment')
 
 
-module.exports = class GitLogUtils 
+module.exports = class DarcsLogUtils 
 
 
   ###
@@ -30,11 +31,88 @@ module.exports = class GitLogUtils
     logItems = []
     lastCommitObj = null
     rawLog = @_fetchFileHistory(fileName)
-    return @_parseGitLogOutput(rawLog)
+    console.log rawLog
+    # return @_parseGitLogOutput(rawLog)
+    return @_parseDarcsChanges(rawLog)
     
   
   # Implementation
-  
+
+  # This works!!
+  # @_parseDarcsChanges: (output) ->
+  #   logLines = output.split("\n")
+  #   lastCommitObject = JSON.parse("{}")
+  #   logItems = JSON.parse("[]")
+
+  #   for line in logLines
+  #     if(line.split(' ')[0] == 'patch')
+  #       # lastCommitObj = JSON.parse('{ "hash":"' + line.split('patch')[1].trim() + '" }')
+  #       # console.log lastCommitObj
+  #       # console.log line.split('patch')[1].trim()
+  #       lastCommitObject.hash = @_sanitize_line(line.split('patch')[1].trim())
+  #     else if(line.split(' ')[0] == 'Author:')
+  #       # console.log line.split('Author:')[1].trim()
+  #       lastCommitObject.authorName = @_sanitize_line(line.split('Author:')[1].trim())
+  #     else if(line.split(' ')[0] == 'Date:')
+  #       # console.log line.split('Date:')[1].trim()
+  #       # needs to be 1459120070
+  #       lastCommitObject.authorDate = moment(line.split('Date:')[1].trim(), "ddd MMM DD HH:mm:ss zz YYYY").unix()
+  #       console.log moment(line.split('Date:')[1].trim(), "ddd MMM DD HH:mm:ss zz YYYY").unix()
+  #     else if(line.indexOf('  *') > -1)
+  #       # console.log line.split('  *')[1].trim()
+  #       lastCommitObject.message = @_sanitize_line(line.split('  *')[1].trim())
+  #       logItems.push lastCommitObject
+  #       lastCommitObject = JSON.parse("{}")
+  #   console.log JSON.stringify(logItems)
+  #   return logItems
+
+  # Trying to get add/removed lines
+  @_parseDarcsChanges: (output) ->
+    logLines = output.split("\n")
+    lastCommitObject = JSON.parse("{}")
+    logItems = JSON.parse("[]")
+    blankLine = 0
+
+    # remove first two lines, may be unneccessary
+    logLines.shift()
+    logLines.shift()
+
+    for line in logLines
+      if(line.split(' ')[0] == 'patch')
+        # lastCommitObj = JSON.parse('{ "hash":"' + line.split('patch')[1].trim() + '" }')
+        # console.log lastCommitObj
+        # console.log line.split('patch')[1].trim()
+        lastCommitObject.hash = @_sanitize_line(line.split('patch')[1].trim())
+      else if(line.split(' ')[0] == 'Author:')
+        # console.log line.split('Author:')[1].trim()
+        lastCommitObject.authorName = @_sanitize_line(line.split('Author:')[1].trim())
+      else if(line.split(' ')[0] == 'Date:')
+        # console.log line.split('Date:')[1].trim()
+        # needs to be 1459120070
+        lastCommitObject.authorDate = moment(line.split('Date:')[1].trim(), "ddd MMM DD HH:mm:ss zz YYYY").unix()
+        # console.log moment(line.split('Date:')[1].trim(), "ddd MMM DD HH:mm:ss zz YYYY").unix()
+      else if(line.indexOf('  *') > -1)
+        # console.log line.split('  *')[1].trim()
+        lastCommitObject.message = @_sanitize_line(line.split('  *')[1].trim())
+        # logItems.push lastCommitObject
+        # lastCommitObject = JSON.parse("{}")
+      else if(sign = line.match(/\-|\+/))
+        # console.log line.match(/\-|\+/)[0]
+        if(sign[0] == '-' && line.split('-')[1][0] != '>')
+          lastCommitObject.linesDeleted = (lastCommitObject.linesDeleted || 0) + Number.parseInt(line.split('-')[1].split(' ')[0])
+          if(line.split('-')[1].match(/\-|\+/))
+            lastCommitObject.linesAdded = (lastCommitObject.linesAdded || 0) + Number.parseInt(line.split('+')[1])
+        else if (sign[0] == '+')
+          lastCommitObject.linesAdded = (lastCommitObject.linesAdded || 0) + Number.parseInt(line.split('+')[1])
+      else if(line == '' || line == '\n' || line == ' ')
+        blankLine = blankLine + 1
+      if(blankLine == 2 && (line == '' || line == '\n' || line == ' '))
+        logItems.push lastCommitObject
+        lastCommitObject = JSON.parse("{}")
+        blankLine = 0
+
+    console.log JSON.stringify(logItems)
+    return logItems       
   
   @_fetchFileHistory: (fileName) ->
     format = ("""{"id": "%H", "authorName": "%an", "relativeDate": "%cr", "authorDate": %at, """ +
@@ -50,7 +128,10 @@ module.exports = class GitLogUtils
       
     fileName = Path.normalize(@_escapeSpacesInPath(fileName))
     
-    cmd = "git log#{flags} #{fileName}"
+    # cmd = "git log#{flags} #{fileName}"
+
+    cmd = "cd /Users/kerismith/salonlofts_com; DARCS_ALWAYS_COLOR=0 DARCS_DO_COLOR_LINES=0 darcs changes --summary " + fileName;
+    console.log cmd
     console.log '$ ' + cmd if process.env.DEBUG == '1'
     return ChildProcess.execSync(cmd,  {stdio: 'pipe', cwd: directory}).toString()
     
@@ -79,6 +160,13 @@ module.exports = class GitLogUtils
 
     return logItems
 
+  @_sanitize_line: (line) ->
+    encLine = line.replace(/\t/g, '  ') # tabs mess with JSON parse
+    .replace(/\"/g, "'")           # sorry, can't parse with quotes in body or message
+    .replace(/(\n|\n\r)/g, '<br>')
+    .replace(/\r/g, '<br>')
+    .replace(/\#\/dquotes\//g, '"')
+    return encLine
 
   @_parseCommitObj: (line) ->
     encLine = line.replace(/\t/g, '  ') # tabs mess with JSON parse

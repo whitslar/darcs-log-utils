@@ -1,7 +1,7 @@
 {
   "name": "git-log-utils",
   "version": "0.2.1",
-  "description": "Utility methods for parsing git log output",
+  "description": "Utility methods for parsing darcs changes output",
   "main": "lib/git-log-utils.js",
   "scripts": {
     "test": "grunt test",
@@ -9,18 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/littlebee/git-log-utils.git"
+    "url": "https://github.com/whitslar/darcs-log-utils.git"
   },
   "keywords": [
-    "git",
+    "darcs",
     "log"
   ],
   "author": "Bee Wilkerson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/littlebee/git-log-utils/issues"
+    "url": "https://github.com/whitslar/darcs-log-utils/issues"
   },
-  "homepage": "https://github.com/littlebee/git-log-utils",
+  "homepage": "https://github.com/whitslar/darcs-log-utils",
   "devDependencies": {
     "babel-core": "^6.4.0",
     "babel-loader": "^6.2.1",
@@ -47,6 +47,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "moment": "^1.5.1"
   }
 }
