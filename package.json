@@ -2,7 +2,7 @@
   "name": "darcs-log-utils",
   "version": "0.2.1",
   "description": "Utility methods for parsing darcs changes output",
-  "main": "lib/git-log-utils.js",
+  "main": "lib/darcs-log-utils.js",
   "scripts": {
     "test": "grunt test",
     "prepublish": "grunt build"
